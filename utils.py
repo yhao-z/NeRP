@@ -10,9 +10,26 @@ import torchvision.utils as vutils
 from data import ImageDataset, ImageDataset_2D, ImageDataset_3D
 
 
+def calc_SNR(y, y_):
+    y = np.array(y).flatten()
+    y_ = np.array(y_).flatten()
+    err = np.linalg.norm(y_ - y) ** 2
+    snr = 10 * np.log10(np.linalg.norm(y_) ** 2 / err)
+
+    return snr
+
+
+def torch_fft2c(x):
+    return torch.fft.fftshift(torch.fft.fftn(torch.fft.ifftshift(x, dim=(-2,-1)), dim=(-2,-1), norm='ortho'), dim=(-2,-1))
+
+
+def torch_ifft2c(X):
+    return torch.fft.fftshift(torch.fft.ifftn(torch.fft.ifftshift(X, dim=(-2,-1)), dim=(-2,-1), norm='ortho'), dim=(-2,-1))
+
+
 def get_config(config):
     with open(config, 'r') as stream:
-        return yaml.load(stream)
+        return yaml.load(stream, Loader=yaml.FullLoader)
 
 def prepare_sub_folder(output_directory):
     image_directory = os.path.join(output_directory, 'images')
@@ -29,12 +46,12 @@ def prepare_sub_folder(output_directory):
 
 def get_data_loader(data, img_path, img_dim, img_slice,
                     train, batch_size, 
-                    num_workers=4, 
+                    num_workers=0, 
                     return_data_idx=False):
     
     if data == 'phantom':
         dataset = ImageDataset(img_path, img_dim)
-    elif '3d' in data:
+    elif 'mri' in data:
         dataset = ImageDataset_3D(img_path, img_dim)
     else:
         dataset = ImageDataset_2D(img_path, img_dim, img_slice)

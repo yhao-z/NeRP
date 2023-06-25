@@ -17,7 +17,7 @@ from utils import get_config, prepare_sub_folder, get_data_loader, ct_parallel_p
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--config', type=str, default='', help='Path to the config file.')
+parser.add_argument('--config', type=str, default='configs/image_regression.yaml', help='Path to the config file.')
 parser.add_argument('--output_path', type=str, default='.', help="outputs path")
 
 # Load experiment setting
