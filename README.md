@@ -1,8 +1,7 @@
 ## Added Note
 
-- I used one of the [OCMR](https://ocmr.info/) data to test the code as I was familiar with this dataset, specifically, I used the `fs_0060_1_5T` data. 
-- `0004.npz`, `5.npz`, and `14.npz` are three different slices of the data.
-- for no embedding, `0004.npz` is used
+- I used one of the [OCMR](https://ocmr.info/) data to test the code as I was familiar with this dataset. 
+- `0004.npz` is one data for no embedding experiments, `5.npz`, and `14.npz` are two different slices of the other data for embedding experiments.
 - for embedding, i instead used `5.npz` to embed and reconstructed the `14.npz`, since it's hard to find a fully-sampled data and a corresponding under-sampled data as the data that the paper used. That is, i used two different slices instead of two data obtained in different time.
 
 <br>
